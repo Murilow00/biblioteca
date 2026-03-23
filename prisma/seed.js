@@ -10,7 +10,7 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
     console.log('🗑️  Limpando banco de dados...');
-    
+
     await prisma.cliente.deleteMany();
     await prisma.catalogo.deleteMany();
 
@@ -27,6 +27,37 @@ async function main() {
                 compras: 2,
                 ativo: true,
             },
+            {
+                nome: 'Murilo Milan',
+                compras: 0,
+                ativo: false
+            },
+            {
+                nome: 'Luiz Felipe',
+                compras: 67,
+                ativo: true
+            },
+            {
+                nome: 'Ana Cremasco',
+                compras: 5,
+                ativo: false
+            },
+            {
+                nome: 'Gustavo',
+                compras: 16,
+                ativo: true
+            },
+            {
+                nome: 'Pedro Urbano',
+                compras: 3,
+                ativo: true
+            },
+            {
+                nome: 'Yasmin',
+                compras: 5,
+                ativo: true
+            }
+
         ],
     });
 
@@ -52,6 +83,13 @@ async function main() {
                 categoria: 'INVESTIGACAO',
                 disponivel: false,
                 preco: 35,
+            },
+            {
+                nome: 'Ordem Paranormal: iniciação',
+                decricao: 'Um grupo de agentes esta investigando o paranormal em uma escola',
+                categoria: 'TERROR',
+                disponivel: true,
+                preco: 90
             },
         ],
     });
