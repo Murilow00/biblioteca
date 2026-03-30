@@ -10,5 +10,5 @@ const autenticar = (req, res, next) => {
     next();
 };
 
-export default autenticar;
+export { autenticar };
 

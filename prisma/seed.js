@@ -3,6 +3,7 @@ import pkg from '@prisma/client';
 const { PrismaClient } = pkg;
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
+import e from 'express';
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
@@ -21,42 +22,52 @@ async function main() {
                 nome: 'Ana Silva',
                 compras: 5,
                 ativo: true,
+                email: 'ana.silva@example.com',
+                telefone: '11987654321'
             },
             {
                 nome: 'Bruno Souza',
                 compras: 2,
                 ativo: true,
+                email: 'bruno.souza@example.com',
+                telefone: '11900000001'
             },
             {
                 nome: 'Murilo Milan',
                 compras: 0,
-                ativo: false
+                ativo: false,  
+                email: 'murilo.milan@example.com',
+                telefone: '11900000002'
             },
             {
                 nome: 'Luiz Felipe',
                 compras: 67,
-                ativo: true
+                ativo: true,
+                email: 'luiz.felipe@example.com',
+                telefone: '11900000003'   
             },
             {
                 nome: 'Ana Cremasco',
                 compras: 5,
-                ativo: false
+                ativo: false,
+                email: 'ana.cremasco@example.com',
+                telefone: '11900000004'
+
             },
             {
                 nome: 'Gustavo',
                 compras: 16,
-                ativo: true
+                ativo: true,
+                email: 'gustavo.sla@example.com',
+                telefone: '11900000005'
             },
             {
                 nome: 'Pedro Urbano',
                 compras: 3,
-                ativo: true
+                ativo: true,
+                email: 'pedro.urbano@example.com',
+                telefone: '11900000006'
             },
-            {
-                nome: 'Yasmin',
-                compras: 5,
-                ativo: true
-            }
 
         ],
     });
