@@ -9,7 +9,8 @@ datasource db {
 model Cliente {
     id        Int      @id @default(autoincrement())
     nome      String?
-    compras  Int?
+    email     String?  @unique
+    telefone  String?
     cep        String?
     logradouro String?
     bairro      String?
