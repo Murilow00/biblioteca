@@ -1,5 +1,5 @@
 import LivroModel from '../models/livroModel.js'
-import ClienteModel from '../models/clienteModel.js';
+import ClienteModel from '../models/clientModel.js';
 
 export const criar = async (req, res) => {
     try {
