@@ -1,4 +1,4 @@
-import ProdutoModel from '../models/ProdutoModel.js';
+import ProdutoModel from '../models/livroModel.js';
 import fs from 'fs/promises';
 import { processarFoto, removerFoto } from '../utils/fotoHelper.js';
 
