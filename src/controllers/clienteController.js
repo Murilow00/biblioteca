@@ -1,4 +1,24 @@
-import ClienteModel from '../models/ClienteModel.js';
+import ClienteModel from '../models/ClientModel.js';
+
+/**
+ * @typedef {object} ReqBodyCliente
+ * @property {string} nome
+ * @property {boolean} estado.required
+ * @property {number} preco.required
+ */
+
+/**
+ *POST /api/clientes
+ * @tags Clientes
+ * @summary Cria um novo registro de exemplo
+ * @description Endpoint responsável por criar um novo exemplo no sistema web.
+ * Recebe os dados no corpo da requisição, valida os campos obrigatórios
+ * @param {ReqBodyCliente} request.body.required
+ *
+ * @return 201 - Registro criado com sucesso
+ * @return 400 - Dados inválidos ou campos obrigatórios em branco
+ * @return 500 - Erro interno de servidor
+ */
 
 export const criar = async (req, res) => {
     try {
@@ -41,7 +61,7 @@ export const atualizar = async (req, res) => {
             return res.status(404).json({ error: 'Registro não encontrado.' });
         }
 
-        
+
         if (!cliente.ativo) {
             return res.status(400).json({ error: 'Operação não permitida para registro inativo.' });
         }
@@ -59,7 +79,7 @@ export const atualizar = async (req, res) => {
             ClienteModel.validarNome(req.body.nome);
             cliente.nome = req.body.nome;
         }
-        
+
         cliente.email = req.body.email ?? cliente.email;
         cliente.telefone = ClienteModel.limparTexto(req.body.telefone) || cliente.telefone;
         cliente.ativo = req.body.ativo ?? cliente.ativo;
@@ -102,7 +122,7 @@ export const deletar = async (req, res) => {
 
         cliente.ativo = false;
         await cliente.atualizar();
-        
+
         return res.json({ message: 'Cliente desativado com sucesso!' });
     } catch (error) {
         return res.status(400).json({ error: "Erro ao desativar cliente." });
