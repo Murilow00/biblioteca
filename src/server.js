@@ -2,6 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import fotoRoutes from './routes/fotoRoute.js';
 import clienteRoutes from './routes/clienteRoute.js';
+import pdfRoutes from './routes/pdfRoutes.js'
 import { autenticar } from './utils/apiKey.js';
 
 const app = express();
@@ -14,8 +15,9 @@ app.get('/', (req, res) => {
 });
 
 // Aplicar autenticação em todas as rotas protegidas
-app.use('/produtos', autenticar, fotoRoutes);
-app.use('/clientes', autenticar, clienteRoutes);
+    app.use('/produtos', fotoRoutes);
+    app.use('/clientes', autenticar, clienteRoutes);
+    app.use('/catalogo', pdfRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Rota não encontrada' });
