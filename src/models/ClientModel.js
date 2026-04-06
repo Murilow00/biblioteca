@@ -63,10 +63,14 @@ export default class ClienteModel {
         return new this(data);
     }
 
-    static limparTexto(texto) {
+       static limparTexto(texto) {
         if (!texto) return '';
-        return texto.replace(/\D/g, '');
+        return texto
+            .split('')
+            .filter((caractere) => caractere >= '0' && caractere <= '9')
+            .join('');
     }
+
 
     static async buscarEnderecoPorCep(cep) {
         const cepLimpo = this.limparTexto(cep);
