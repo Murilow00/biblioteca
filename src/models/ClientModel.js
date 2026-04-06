@@ -63,6 +63,10 @@ export default class ClienteModel {
         return new this(data);
     }
 
+    static limparTexto(texto) {
+        if (!texto) return '';
+        return texto.replace(/\D/g, '');
+    }
 
     static async buscarEnderecoPorCep(cep) {
         const cepLimpo = this.limparTexto(cep);
