@@ -11,7 +11,7 @@ export const criar = async (req, res) => {
         try {
             endereco = await ClienteModel.buscarEnderecoPorCep(cepValidado);
         } catch (erroCep) {
-            return res.status(400).json({ error: "CEP inválido ou não encontrado." });
+            return res.status(400).json({ error: "CEP inválido ou não encontrado.", error: erroCep });
         }
 
         const cliente = new ClienteModel({
@@ -28,7 +28,8 @@ export const criar = async (req, res) => {
         const resultado = await cliente.criar();
         return res.status(201).json({ message: 'Cliente criado com sucesso!', cliente: resultado });
     } catch (error) {
-        return res.status(400).json({ error: "Erro ao criar cliente." });
+
+        return res.status(400).json({ error: "Erro ao criar cliente.", erro: error.message });
     }
 };
 
@@ -43,7 +44,7 @@ export const atualizar = async (req, res) => {
 
 
         if (!cliente.ativo) {
-            return res.status(400).json({ error: 'Operação não permitida para registro inativo.' });
+            return res.status(400).json({ error: 'Operação não permitida para registro inativo.', error: error });
         }
 
         if (req.body.cep && req.body.cep !== cliente.cep) {
@@ -67,7 +68,7 @@ export const atualizar = async (req, res) => {
         const resultado = await cliente.atualizar();
         return res.json(resultado);
     } catch (error) {
-        return res.status(400).json({ error: "Erro ao atualizar cliente." });
+        return res.status(400).json({ error: "Erro ao atualizar cliente.", error: error });
     }
 };
 
@@ -76,7 +77,7 @@ export const buscarTodos = async (req, res) => {
         const clientes = await ClienteModel.buscarTodos(req.query);
         return res.json(clientes);
     } catch (error) {
-        return res.status(500).json({ error: "Erro ao buscar clientes." });
+        return res.status(500).json({ error: "Erro ao buscar clientes.", error: error });
     }
 };
 
@@ -87,7 +88,7 @@ export const buscarPorId = async (req, res) => {
         if (!cliente) return res.status(404).json({ error: 'Registro não encontrado.' });
         return res.json(cliente);
     } catch (error) {
-        return res.status(400).json({ error: "Erro ao buscar cliente." });
+        return res.status(400).json({ error: "Erro ao buscar cliente.", error: error });
     }
 };
 
@@ -105,6 +106,6 @@ export const deletar = async (req, res) => {
 
         return res.json({ message: 'Cliente desativado com sucesso!' });
     } catch (error) {
-        return res.status(400).json({ error: "Erro ao desativar cliente." });
+        return res.status(400).json({ error: "Erro ao desativar cliente.", error: error });
     }
 };

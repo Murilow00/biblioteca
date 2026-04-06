@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
     app.use('/clientes', autenticar, clienteRoutes);
     app.use('/catalogo', pdfRoutes);
 
+
 app.use((req, res) => {
     res.status(404).json({ error: 'Rota não encontrada' });
 });

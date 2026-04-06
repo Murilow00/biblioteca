@@ -1,32 +1,78 @@
 import prisma from '../utils/prismaClient.js';
 
-export default class ExemploModel {
-    constructor({ id = null, nome = null, estado = true, preco = null } = {}) {
+export default class livroModel {
+    constructor({
+        id,
+        nome,
+        descricao = null,
+        categoria = null,
+        preco = null,
+        disponivel = true,
+        foto = null,
+    } = {}) {
         this.id = id;
         this.nome = nome;
-        this.estado = estado;
+        this.descricao = descricao;
+        this.categoria = categoria;
         this.preco = preco;
+        this.disponivel = disponivel;
+        this.foto = foto;
     }
 
     async criar() {
-        return prisma.exemplo.create({
+
+        if (this.categoria !== undefined) {
+            const tipos = ["fantasia", "terror", "aventura", "investigação"]
+            if (!this.categoria.includes(tipos.toLowerCase())) {
+                return res.status(400).json({
+                    total: 0,
+                    mensagem: `Tipo inválido. Tipos aceitos: ${tipos.join(', ')}`,
+                });
+            }
+        }
+
+        if (this.preco <= 0) {
+            return res.status(400).json({
+                total: 0,
+                mensagem: "O preço de um livro não pode ser menor ou igual 0    "
+            })
+        }
+
+        if (this.disponivel != true) {
+            return res.status(400).json({
+                mensagem: "Não é permitido o uso de um livro indisponível"
+            })
+        }
+
+
+        return prisma.livro.create({
             data: {
                 nome: this.nome,
-                estado: this.estado,
+                descricao: this.estado,
+                categoria: this.categoria,
+                disponivel: this.disponivel,
                 preco: this.preco,
+                foto: this.foto,
             },
         });
     }
 
     async atualizar() {
-        return prisma.exemplo.update({
+        return prisma.livro.update({
             where: { id: this.id },
-            data: { nome: this.nome, estado: this.estado, preco: this.preco },
+            data: {
+                nome: this.nome,
+                descricao: this.estado,
+                categoria: this.categoria,
+                disponivel: this.disponivel,
+                preco: this.preco,
+                foto: this.foto,
+            },
         });
     }
 
     async deletar() {
-        return prisma.exemplo.delete({ where: { id: this.id } });
+        return prisma.livro.delete({ where: { id: this.id } });
     }
 
     static async buscarTodos(filtros = {}) {
@@ -35,21 +81,22 @@ export default class ExemploModel {
         if (filtros.nome) {
             where.nome = { contains: filtros.nome, mode: 'insensitive' };
         }
-        if (filtros.estado !== undefined) {
-            where.estado = filtros.estado === 'true';
-        }
-        if (filtros.preco !== undefined) {
-            where.preco = parseFloat(filtros.preco);
+         if (filtros.categoria) {
+             where.categoria = { contains: filtros.categoria, mode: 'insensitive' };
+         }
+        if (filtros.disponivel !== undefined) {
+            where.disponivel = filtros.disponivel === 'true';
         }
 
-        return prisma.exemplo.findMany({ where });
+        return prisma.livro.findMany({ where });
     }
 
     static async buscarPorId(id) {
-        const data = await prisma.exemplo.findUnique({ where: { id } });
+        const data = await prisma.livro.findUnique({ where: { id } });
         if (!data) {
             return null;
         }
-        return new ExemploModel(data);
+        return new livroModel(data);
     }
+
 }
