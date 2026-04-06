@@ -48,7 +48,7 @@ export const criar = async (req, res) => {
         const resultado = await cliente.criar();
         return res.status(201).json({ message: 'Cliente criado com sucesso!', cliente: resultado });
     } catch (error) {
-        return res.status(400).json({ error: "Erro ao criar cliente.", error });
+        return res.status(400).json({ error: "Erro ao criar cliente.", erro: error.message });
     }
 };
 
