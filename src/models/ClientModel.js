@@ -49,7 +49,7 @@ export default class ClienteModel {
 
     static async buscarTodos(filtros = {}) {
         const where = {};
-        
+
         if (filtros.nome) where.nome = { contains: filtros.nome, mode: 'insensitive' };
         if (filtros.email) where.email = { contains: filtros.email, mode: 'insensitive' };
         if (filtros.localidade) where.localidade = { contains: filtros.localidade, mode: 'insensitive' };
@@ -79,7 +79,7 @@ export default class ClienteModel {
         try {
             const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
             const data = await response.json();
-            
+
             if (data.erro) {
                 throw new Error(`CEP não encontrado.`);
             }
@@ -106,3 +106,6 @@ export default class ClienteModel {
         return cepLimpo;
     }
 }
+
+
+
