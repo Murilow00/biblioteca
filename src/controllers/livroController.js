@@ -1,5 +1,5 @@
-import LivroModel from '../models/livroModel.js'
-import ClienteModel from '../models/clienteModel.js';
+import LivroModel from '../models/LivroModel.js';
+import ClienteModel from '../models/ClientModel.js';
 
 export const criar = async (req, res) => {
     try {
@@ -34,14 +34,14 @@ export const criar = async (req, res) => {
             preco: parseFloat(preco),
             disponivel: disponivel !== undefined ? disponivel : true,
             foto,
-            clienteId: parseInt(clienteId)
+            clienteId: parseInt(clienteId),
         });
 
-        const data= await livro.criar();
+        const data = await livro.criar();
 
         return res.status(201).json({
             message: 'Registro criado com suceso!',
-            data
+            data,
         });
     } catch (error) {
         console.error('Erro ao criar:', error);

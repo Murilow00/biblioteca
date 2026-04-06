@@ -1,4 +1,4 @@
-import ProdutoModel from '../models/livroModel.js';
+import ProdutoModel from '../models/LivroModel.js';
 import fs from 'fs/promises';
 import { processarFoto, removerFoto } from '../utils/fotoHelper.js';
 
@@ -10,16 +10,18 @@ export const uploadFoto = async (req, res) => {
 
         const { id } = req.params;
 
-        if (isNaN(id)) return res.status(400).json({ error: 'O id enviado não é um número válido' });
+        if (isNaN(id))
+            return res.status(400).json({ error: 'O id enviado não é um número válido' });
 
         const produto = await ProdutoModel.buscarPorId(parseInt(id));
 
         if (!produto) {
-            removerFoto(req.file.path); return res.status(400).json({ error: 'Produto não possui registro' });
+            removerFoto(req.file.path);
+            return res.status(400).json({ error: 'Produto não possui registro' });
         }
 
         if (produto.foto) {
-            await fs.unlink(produto.foto).catch(() => { });
+            await fs.unlink(produto.foto).catch(() => {});
         }
 
         produto.foto = await processarFoto(req.file.path);
@@ -48,7 +50,7 @@ export const verFoto = async (req, res) => {
 
         if (!produto.foto) {
             return res.status(400).json({ error: 'Este produto não tem foto cadastrado' });
-        };
+        }
 
         res.sendFile(produto.foto, { root: '.' });
     } catch (error) {

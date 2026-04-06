@@ -1,0 +1,14 @@
+import express from 'express';
+import * as controller from '../controllers/livroController.js';
+
+
+
+const router = express.Router();
+
+router.post('/', controller.criar);
+router.get('/', controller);
+router.get('/:id', controller);
+router.put('/:id', controller.atualizar);
+router.delete('/:id', controller.deletar);
+
+export default router;
