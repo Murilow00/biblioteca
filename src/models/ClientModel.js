@@ -65,7 +65,7 @@ export default class ClienteModel {
 
        static limparTexto(texto) {
         if (!texto) return '';
-        return texto
+        return String(texto)
             .split('')
             .filter((caractere) => caractere >= '0' && caractere <= '9')
             .join('');
