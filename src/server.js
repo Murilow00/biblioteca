@@ -14,7 +14,6 @@ app.get('/', (req, res) => {
 });
 
 // Aplicar autenticação em todas as rotas protegidas
-app.use('/produtos', autenticar, fotoRoutes);
 app.use('/clientes', autenticar, clienteRoutes);
 
 app.use((req, res) => {
